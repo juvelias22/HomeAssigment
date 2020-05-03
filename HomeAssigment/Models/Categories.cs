@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace PropertyWebSolution.Models
+namespace HomeAssigment.Models
 {
-    public class Item
+    public class Categories
     {
         ///<summary>
         ///id  is the primary key.. it should be named id
@@ -14,11 +14,11 @@ namespace PropertyWebSolution.Models
         ///
 
         [Key]
-        public int ItemId { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        [MinLength(2, ErrorMessage = "your ")]
-        public string ItemName { get; set; }
+        [MinLength(2, ErrorMessage = "min char is two ")]
+        public string Category { get; set; }
 
 
 

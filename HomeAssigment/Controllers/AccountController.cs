@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HomeAssigment.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HomeAssigment.Controllers
 {
@@ -139,6 +140,7 @@ namespace HomeAssigment.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.Javascript = "<script language='javascript' type='text/javascript'>alert('Data Already Exists');</script>";
             return View();
         }
 
@@ -149,25 +151,32 @@ namespace HomeAssigment.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+           
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+ 
+                       //deafult role RegisteredUser       
+                    IdentityResult chkRole = UserManager.AddToRole(user.Id, "RegisteredUser");
 
+                    if (!chkRole.Succeeded)
+                    {
+                      
+                        // RegisteredUser user was not assigned to role, something went wrong!
+                        // Log this information and handle it
+                        Console.Error.WriteLine("An error has occured in Startup! RegisteredUser user was not assigned to Admin role successfully.");
+                        Console.WriteLine("An error has occured in Startup! RegisteredUser user was not assigned to Admin role successfully.");
+                    }
+                
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
-
+            Console.WriteLine("ffsssfF");
             // If we got this far, something failed, redisplay form
             return View(model);
         }
