@@ -50,6 +50,7 @@ namespace HomeAssigment.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 items.ItemOwner = User.Identity.Name;
                 db.Items.Add(items);
                 db.SaveChanges();
@@ -79,10 +80,11 @@ namespace HomeAssigment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ItemName,ItemOwner,ItemQuality,ItemCategory,ItemQuantity,ItemPrice,ItemImage")] Items items)
+        public ActionResult Edit([Bind(Include = "Id,ItemName,ItemQuality,ItemCategory,ItemQuantity,ItemPrice,ItemImage")] Items items)
         {
             if (ModelState.IsValid)
             {
+                items.ItemOwner = User.Identity.Name;
                 db.Entry(items).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

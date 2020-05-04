@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HomeAssigment.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace HomeAssigment.Models
 
         [Required]
         [Display(Name = "Item Quality")]
+        [StringQualityOptions()]
         public string ItemQuality { get; set; }
 
         [Required]
@@ -47,19 +49,6 @@ namespace HomeAssigment.Models
         public string ItemImage { get; set; }
 
 
-        public class StringRangeAttribute : ValidationAttribute
-        {
-            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-            {
-
-                if (value.ToString() == "Excellent" || value.ToString() == "Good" || value.ToString() == "Poor" || value.ToString() == "Bad")
-                {
-                    return ValidationResult.Success;
-                }
-
-
-                return new ValidationResult("Please enter a correct value");
-            }
-        }
+        
     }
 }
