@@ -58,11 +58,11 @@ namespace HomeAssigment
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "480131742555-cta4tqcs9m8gbkppe59gd4orcejl9a3l.apps.googleusercontent.com",
+               ClientSecret = "NdC69k3Eo8AYrkxtk1CVfTQy"
+            });
         }
     }
 }
