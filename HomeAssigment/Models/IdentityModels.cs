@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HomeAssigment.Models
 {
@@ -32,9 +33,5 @@ namespace HomeAssigment.Models
         public System.Data.Entity.DbSet<HomeAssigment.Models.Items> Items { get; set; }
 
         public System.Data.Entity.DbSet<HomeAssigment.Models.Categories> Categories { get; set; }
-
-        public System.Data.Entity.DbSet<HomeAssigment.Models.ItemType> ItemTypes { get; set; }
-
-        public System.Data.Entity.DbSet<HomeAssigment.Models.Quality> Quality { get; set; }
     }
 }

@@ -1,11 +1,12 @@
-﻿using HomeAssigment.Models;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using HomeAssigment.Models;
 
 namespace HomeAssigment.Controllers
 {
@@ -23,7 +24,6 @@ namespace HomeAssigment.Controllers
         {
             UserManager = userManager;
             SignInManager = signInManager;
-
         }
 
         public ApplicationSignInManager SignInManager
@@ -32,9 +32,9 @@ namespace HomeAssigment.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set
-            {
-                _signInManager = value;
+            private set 
+            { 
+                _signInManager = value; 
             }
         }
 
@@ -333,7 +333,7 @@ namespace HomeAssigment.Controllers
             base.Dispose(disposing);
         }
 
-        #region Helpers
+#region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -384,6 +384,6 @@ namespace HomeAssigment.Controllers
             Error
         }
 
-        #endregion
+#endregion
     }
 }

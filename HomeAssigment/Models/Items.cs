@@ -1,11 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HomeAssigment.Validation;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
 namespace HomeAssigment.Models
 {
     public class Items
     {
-        internal object itemname;
-
         ///<summary>
         ///id  is the primary key.. it should be named id
         ///
@@ -15,21 +18,21 @@ namespace HomeAssigment.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Item type")]
-        public int ItemTypeId { get; set; }
-        public ItemType itemName { get; set; }
-
-
-
+        [Display(Name = "Item Name")]
+        [MinLength(2, ErrorMessage = "min char is two ")]
+        public string ItemName { get; set; }
 
         public string ItemOwner { get; set; }
 
 
         [Required]
         [Display(Name = "Item Quality")]
+        [StringQualityOptions()]
+        public string ItemQuality { get; set; }
 
-        public int QualityId { get; set; }
-        public Quality qualityType { get; set; }
+        [Required]
+        [Display(Name = "Item Category")]
+        public string ItemCategory { get; set; }
 
         [Required]
         [Display(Name = "Item Quantity")]
@@ -41,8 +44,11 @@ namespace HomeAssigment.Models
         [Range(1, double.MaxValue, ErrorMessage = "Only positive number allowed")]
         public double ItemPrice { get; set; }
 
+        [Required]
+        [Display(Name = "Item Image")]
+        public string ItemImage { get; set; }
 
 
-
+        
     }
 }
