@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
 using System;
+using System.Linq;
 
 [assembly: OwinStartupAttribute(typeof(HomeAssigment.Startup))]
 namespace HomeAssigment
@@ -15,8 +16,31 @@ namespace HomeAssigment
             ConfigureAuth(app);
             createRolesAndDefaultUsers();
 
+            CreateQualiyTypes();
 
 
+
+        }
+
+        public void CreateQualiyTypes()
+        {
+            Quality q = new Quality();
+            ApplicationDbContext db = new ApplicationDbContext();
+            if (!db.Quality.Any())
+            {
+                q.QualityType = "Excellent";
+                db.Quality.Add(q);
+                db.SaveChanges();
+                q.QualityType = "Good";
+                db.Quality.Add(q);
+                db.SaveChanges();
+                q.QualityType = "Poor";
+                db.Quality.Add(q);
+                db.SaveChanges();
+                q.QualityType = "Bad";
+                db.Quality.Add(q);
+                db.SaveChanges();
+            }
 
 
         }
@@ -24,21 +48,25 @@ namespace HomeAssigment
 
         private void createRolesAndDefaultUsers()
         {
-           
+
+
+
+
+
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
-                
+
                 using (RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context)))
                 {
                     // check whether an Admin role already exists - if it does, do nothing
                     if (!roleManager.RoleExists("Admin"))
                     {
-                       
+
                         IdentityRole role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
                         role.Name = "Admin";
                         roleManager.Create(role);
                     }
-                    
+
                     if (!roleManager.RoleExists("RegisteredUser"))
                     {
 

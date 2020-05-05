@@ -6,117 +6,112 @@ using System.Web.Mvc;
 
 namespace HomeAssigment.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class CategoriesController : Controller
+    public class ItemTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Categories
-        [Authorize(Roles = "Admin")]
+        // GET: ItemTypes
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            var itemTypes = db.ItemTypes.Include(i => i.category);
+            return View(itemTypes.ToList());
         }
 
-        // GET: Categories/Details/5
-
+        // GET: ItemTypes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categories categories = db.Categories.Find(id);
-            if (categories == null)
+            ItemType itemType = db.ItemTypes.Find(id);
+            if (itemType == null)
             {
                 return HttpNotFound();
             }
-            return View(categories);
+            return View(itemType);
         }
 
-        // GET: Categories/Create
-
+        // GET: ItemTypes/Create
         public ActionResult Create()
         {
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Category");
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: ItemTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public ActionResult Create([Bind(Include = "Id,Category")] Categories categories)
+        public ActionResult Create([Bind(Include = "Id,CategoryId,ItemName,ItemImage")] ItemType itemType)
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(categories);
+                db.ItemTypes.Add(itemType);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(categories);
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Category", itemType.CategoryId);
+            return View(itemType);
         }
 
-        // GET: Categories/Edit/5
-
+        // GET: ItemTypes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categories categories = db.Categories.Find(id);
-            if (categories == null)
+            ItemType itemType = db.ItemTypes.Find(id);
+            if (itemType == null)
             {
                 return HttpNotFound();
             }
-            return View(categories);
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Category", itemType.CategoryId);
+            return View(itemType);
         }
 
-        // POST: Categories/Edit/5
+        // POST: ItemTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public ActionResult Edit([Bind(Include = "Id,Category")] Categories categories)
+        public ActionResult Edit([Bind(Include = "Id,CategoryId,ItemName,ItemImage")] ItemType itemType)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(categories).State = EntityState.Modified;
+                db.Entry(itemType).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(categories);
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Category", itemType.CategoryId);
+            return View(itemType);
         }
 
-        // GET: Categories/Delete/5
-        // [Authorize(Roles = "Admin")]
+        // GET: ItemTypes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categories categories = db.Categories.Find(id);
-            if (categories == null)
+            ItemType itemType = db.ItemTypes.Find(id);
+            if (itemType == null)
             {
                 return HttpNotFound();
             }
-            return View(categories);
+            return View(itemType);
         }
 
-        // POST: Categories/Delete/5
-
+        // POST: ItemTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-
         public ActionResult DeleteConfirmed(int id)
         {
-            Categories categories = db.Categories.Find(id);
-            db.Categories.Remove(categories);
+            ItemType itemType = db.ItemTypes.Find(id);
+            db.ItemTypes.Remove(itemType);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

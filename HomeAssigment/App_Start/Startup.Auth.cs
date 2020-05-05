@@ -1,11 +1,11 @@
-﻿using System;
+﻿using HomeAssigment.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using HomeAssigment.Models;
+using System;
 
 namespace HomeAssigment
 {
@@ -34,7 +34,7 @@ namespace HomeAssigment
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -61,7 +61,7 @@ namespace HomeAssigment
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "480131742555-cta4tqcs9m8gbkppe59gd4orcejl9a3l.apps.googleusercontent.com",
-               ClientSecret = "NdC69k3Eo8AYrkxtk1CVfTQy"
+                ClientSecret = "NdC69k3Eo8AYrkxtk1CVfTQy"
             });
         }
     }

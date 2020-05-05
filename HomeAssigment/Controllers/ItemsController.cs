@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using HomeAssigment.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using HomeAssigment.Models;
 
 namespace HomeAssigment.Controllers
 {
@@ -17,7 +13,8 @@ namespace HomeAssigment.Controllers
         // GET: Items
         public ActionResult Index()
         {
-            return View(db.Items.ToList());
+            var items = db.Items.Include(i => i.itemName).Include(i => i.qualityType);
+            return View(items.ToList());
         }
 
         // GET: Items/Details/5
@@ -38,6 +35,8 @@ namespace HomeAssigment.Controllers
         // GET: Items/Create
         public ActionResult Create()
         {
+            ViewBag.ItemTypeId = new SelectList(db.ItemTypes, "Id", "ItemName");
+            ViewBag.QualityId = new SelectList(db.Quality, "Id", "QualityType");
             return View();
         }
 
@@ -46,17 +45,17 @@ namespace HomeAssigment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ItemName,ItemQuality,ItemCategory,ItemQuantity,ItemPrice,ItemImage")] Items items)
+        public ActionResult Create([Bind(Include = "Id,ItemTypeId,ItemOwner,QualityId,ItemQuantity,ItemPrice")] Items items)
         {
             if (ModelState.IsValid)
             {
-                
-                items.ItemOwner = User.Identity.Name;
                 db.Items.Add(items);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ItemTypeId = new SelectList(db.ItemTypes, "Id", "ItemName", items.ItemTypeId);
+            ViewBag.QualityId = new SelectList(db.Quality, "Id", "QualityType", items.QualityId);
             return View(items);
         }
 
@@ -72,6 +71,8 @@ namespace HomeAssigment.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ItemTypeId = new SelectList(db.ItemTypes, "Id", "ItemName", items.ItemTypeId);
+            ViewBag.QualityId = new SelectList(db.Quality, "Id", "QualityType", items.QualityId);
             return View(items);
         }
 
@@ -80,15 +81,16 @@ namespace HomeAssigment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ItemName,ItemQuality,ItemCategory,ItemQuantity,ItemPrice,ItemImage")] Items items)
+        public ActionResult Edit([Bind(Include = "Id,ItemTypeId,ItemOwner,QualityId,ItemQuantity,ItemPrice")] Items items)
         {
             if (ModelState.IsValid)
             {
-                items.ItemOwner = User.Identity.Name;
                 db.Entry(items).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ItemTypeId = new SelectList(db.ItemTypes, "Id", "ItemName", items.ItemTypeId);
+            ViewBag.QualityId = new SelectList(db.Quality, "Id", "QualityType", items.QualityId);
             return View(items);
         }
 

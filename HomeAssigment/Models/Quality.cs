@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace HomeAssigment.Models
 {
-    public class Categories
+    public class Quality
     {
         ///<summary>
         ///id  is the primary key.. it should be named id
@@ -12,12 +13,9 @@ namespace HomeAssigment.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [MinLength(2, ErrorMessage = "min char is two ")]
-        public string Category { get; set; }
-
-
+        public String QualityType { get; set; }
 
 
     }
 }
+
