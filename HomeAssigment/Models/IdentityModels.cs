@@ -36,5 +36,7 @@ namespace HomeAssigment.Models
         public System.Data.Entity.DbSet<HomeAssigment.Models.ItemType> ItemTypes { get; set; }
 
         public System.Data.Entity.DbSet<HomeAssigment.Models.Quality> Quality { get; set; }
+
+        public System.Data.Entity.DbSet<HomeAssigment.Models.Hello> Helloes { get; set; }
     }
 }

@@ -29,7 +29,10 @@ namespace HomeAssigment
             if (!db.Quality.Any())
             {
                 q.QualityType = "Excellent";
+
+
                 db.Quality.Add(q);
+
                 db.SaveChanges();
                 q.QualityType = "Good";
                 db.Quality.Add(q);
