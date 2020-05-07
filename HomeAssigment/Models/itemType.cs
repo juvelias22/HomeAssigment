@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace HomeAssigment.Models
 {
@@ -22,11 +23,10 @@ namespace HomeAssigment.Models
         [MinLength(2, ErrorMessage = "min char is two ")]
         public string ItemName { get; set; }
 
-
-
         [Required]
-        [Display(Name = "Item Image")]
-        public string ItemImage { get; set; }
+        [Display(Name = "Item Path")]
+        public string ImagePath { get; set; }
+     
 
 
 

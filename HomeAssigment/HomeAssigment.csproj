@@ -172,7 +172,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\HelloesController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\ItemTypesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -251,20 +251,20 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\ItemTypes\Create.cshtml" />
-    <Content Include="Views\ItemTypes\Delete.cshtml" />
-    <Content Include="Views\ItemTypes\Details.cshtml" />
-    <Content Include="Views\ItemTypes\Edit.cshtml" />
-    <Content Include="Views\ItemTypes\Index.cshtml" />
     <Content Include="Views\Items\Create.cshtml" />
     <Content Include="Views\Items\Delete.cshtml" />
     <Content Include="Views\Items\Details.cshtml" />
     <Content Include="Views\Items\Edit.cshtml" />
     <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\ItemTypes\Create.cshtml" />
+    <Content Include="Views\ItemTypes\Delete.cshtml" />
+    <Content Include="Views\ItemTypes\Details.cshtml" />
+    <Content Include="Views\ItemTypes\Edit.cshtml" />
+    <Content Include="Views\ItemTypes\Index.cshtml" />
+    <Content Include="Views\ItemTypes\UploadImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Qualities\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
