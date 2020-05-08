@@ -16,6 +16,7 @@ namespace HomeAssigment.Controllers
 {
     public class ItemTypesController : Controller
     {
+        public static string ImgUrl;
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ItemTypes
@@ -40,6 +41,7 @@ namespace HomeAssigment.Controllers
             return View(itemType);
         }
 
+      
         // GET: ItemTypes/Create
         public ActionResult Create()
         {
@@ -52,10 +54,11 @@ namespace HomeAssigment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CategoryId,ItemName,ImagePath")] ItemType itemType)
+        public ActionResult Create([Bind(Include = "Id,CategoryId,ItemName")] ItemType itemType, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                itemType.ImagePath = UploadImage(file);
                 db.ItemTypes.Add(itemType);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -64,6 +67,49 @@ namespace HomeAssigment.Controllers
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Category", itemType.CategoryId);
             return View(itemType);
         }
+
+        static string ApplicationName = "Enterprise-Home-Assigment";
+
+
+        public string UploadImage(HttpPostedFileBase file)
+        {
+            string accessToken = "SW-I0OEdJxAAAAAAAAAAfphwh-KYekJ2hnYYLwSAOdhqOZfIH6nspKGb2IMYDriB";
+            //   HttpPostedFileBase file;
+            using (DropboxClient client =
+                new DropboxClient(accessToken, new DropboxClientConfig(ApplicationName)))
+            {
+
+
+                string[] splitInputFileName = file.FileName.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
+                string fileNameAndExtension = splitInputFileName[splitInputFileName.Length - 1];
+
+                string[] fileNameAndExtensionSplit = fileNameAndExtension.Split('.');
+                string originalFileName = fileNameAndExtensionSplit[0];
+                string originalExtension = fileNameAndExtensionSplit[1];
+
+                string fileName = @"/Images/" + originalFileName + Guid.NewGuid().ToString().Replace("-", "") + "." + originalExtension;
+
+
+
+                var updated = client.Files.UploadAsync(fileName,
+                                                        mode: WriteMode.Overwrite.Instance,
+                                                        body: file.InputStream).Result;
+
+                var result = client.Sharing.CreateSharedLinkWithSettingsAsync(fileName).Result;
+
+             //   ImgUrl = "aaa";
+                System.Diagnostics.Debug.WriteLine(ImgUrl);
+                //System.Diagnostics.Debug.WriteLine()
+                // ImageUrl = result.Url
+                //  return View(itemType, new { ImageUrl = result.Url });
+
+                return result.Url.Replace("?dl=0","?dl=1");
+            }
+
+        }
+
+
+
 
         // GET: ItemTypes/Edit/5
         public ActionResult Edit(int? id)
@@ -133,44 +179,7 @@ namespace HomeAssigment.Controllers
             base.Dispose(disposing);
         }
 
-        [HttpGet]
-        public ActionResult UploadImage()
-        {
-            return View();
-        }
-
-        static string ApplicationName = "Enterprise-Home-Assigment";
-
         
-                [HttpPost]
-        public ActionResult UploadImage(HttpPostedFileBase file)
-        {
-            string accessToken = "SW-I0OEdJxAAAAAAAAAAfphwh-KYekJ2hnYYLwSAOdhqOZfIH6nspKGb2IMYDriB";
-
-            using (DropboxClient client =
-                new DropboxClient(accessToken, new DropboxClientConfig(ApplicationName))) 
-            {
-                string[] splitInputFileName = file.FileName.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
-                string fileNameAndExtension = splitInputFileName[splitInputFileName.Length - 1];
-
-                string[] fileNameAndExtensionSplit = fileNameAndExtension.Split('.');
-                string originalFileName = fileNameAndExtensionSplit[0];
-                string originalExtension = fileNameAndExtensionSplit[1];
-
-                string fileName=@"/Images/"+originalFileName+Guid.NewGuid().ToString().Replace("-","")+"."+originalExtension;
-
-
-
-                var updated = client.Files.UploadAsync(fileName,
-                                                        mode: WriteMode.Overwrite.Instance,
-                                                        body: file.InputStream).Result;
-
-                var result = client.Sharing.CreateSharedLinkWithSettingsAsync(fileName).Result;
-
-                return RedirectToAction("ViewImage", "ItemType", new { ImageUrl = result.Url });
-            }
-
-        }
 
         public ActionResult ViewImage(string imageUrl) {
 

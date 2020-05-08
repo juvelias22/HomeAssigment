@@ -23,7 +23,7 @@ namespace HomeAssigment.Models
         [MinLength(2, ErrorMessage = "min char is two ")]
         public string ItemName { get; set; }
 
-        [Required]
+     
         [Display(Name = "Item Path")]
         public string ImagePath { get; set; }
      

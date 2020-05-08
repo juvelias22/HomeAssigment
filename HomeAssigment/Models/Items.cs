@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace HomeAssigment.Models
 {
     public class Items
     {
-        internal object itemname;
+        //internal object itemname;
 
         ///<summary>
         ///id  is the primary key.. it should be named id
@@ -40,6 +41,11 @@ namespace HomeAssigment.Models
         [Display(Name = "Item Price")]
         [Range(1, double.MaxValue, ErrorMessage = "Only positive number allowed")]
         public double ItemPrice { get; set; }
+
+
+
+        public DateTime ItemDate { get; set; }
+
 
 
 

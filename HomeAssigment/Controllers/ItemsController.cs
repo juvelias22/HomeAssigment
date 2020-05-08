@@ -1,4 +1,5 @@
 ﻿using HomeAssigment.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -14,6 +15,22 @@ namespace HomeAssigment.Controllers
         public ActionResult Index()
         {
             var items = db.Items.Include(i => i.itemName).Include(i => i.qualityType);
+            return View(items.ToList());
+        }
+
+        public ActionResult PartialPage()
+        {
+            var items = db.Items.Include(i => i.itemName).Include(i => i.qualityType);
+
+            // OrderBy(a => a.ItemDate).ToList()
+            return View(items.ToList());
+        }
+
+        public ActionResult PartialPageItemsNewFirst()
+        {
+            var items = db.Items.Include(i => i.itemName).Include(i => i.qualityType).OrderByDescending(a => a.ItemDate);
+
+           // OrderBy(a => a.ItemDate).ToList()
             return View(items.ToList());
         }
 
@@ -45,10 +62,12 @@ namespace HomeAssigment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ItemTypeId,ItemOwner,QualityId,ItemQuantity,ItemPrice")] Items items)
+        public ActionResult Create([Bind(Include = "Id,ItemTypeId,QualityId,ItemQuantity,ItemPrice")] Items items)
         {
             if (ModelState.IsValid)
             {
+                items.ItemOwner = User.Identity.Name;
+                items.ItemDate = DateTime.Now;
                 db.Items.Add(items);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -81,10 +100,12 @@ namespace HomeAssigment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ItemTypeId,ItemOwner,QualityId,ItemQuantity,ItemPrice")] Items items)
+        public ActionResult Edit([Bind(Include = "Id,ItemTypeId,QualityId,ItemQuantity,ItemPrice")] Items items)
         {
             if (ModelState.IsValid)
             {
+                items.ItemOwner = User.Identity.Name;
+                items.ItemDate = DateTime.Now;
                 db.Entry(items).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
