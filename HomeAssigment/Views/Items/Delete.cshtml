@@ -12,19 +12,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.itemName.ItemName)
+            @Html.DisplayNameFor(model => model.ItemName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.itemName.ItemName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.qualityType.QualityType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.qualityType.QualityType)
+            @Html.DisplayFor(model => model.ItemName)
         </dd>
 
         <dt>
@@ -33,6 +25,22 @@
 
         <dd>
             @Html.DisplayFor(model => model.ItemOwner)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemQuality)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemQuality)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemCategory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemCategory)
         </dd>
 
         <dt>
@@ -49,6 +57,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.ItemPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemImage)
         </dd>
 
     </dl>
