@@ -13,18 +13,17 @@
     @foreach (var item in Model)
     {
 
-
+        <br>
+        <br>
         <div class="card">
-            <div class="card-header">
-                Featured
-            </div>
+
             <div class="card-body">
                 <h5 class="card-title">@Html.DisplayFor(modelItem => item.itemName.ItemName)</h5>
-                <p class="card-text"> @Html.DisplayFor(modelItem => item.itemName.ItemName)</p>
-                <p class="card-text">Price:    @Html.DisplayNameFor(model => model.ItemPrice)</p>
+                <p class="card-text"> Price: @Html.DisplayFor(modelItem => item.ItemPrice)</p>
+                <p class="card-text">date created :    @Html.DisplayFor(modelItem => item.ItemDate)</p>
 
                 <a href="#" class="btn btn-primary">Go somewhere</a>
-              
+
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id })
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
@@ -32,6 +31,8 @@
             </div>
         </div>
 
+        <br>
+        <br>
 
     }
 

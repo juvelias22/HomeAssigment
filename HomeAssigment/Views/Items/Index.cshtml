@@ -12,26 +12,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ItemName)
+            @Html.DisplayNameFor(model => model.itemName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ItemOwner)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ItemQuality)
+            @Html.DisplayNameFor(model => model.qualityType)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemCategory)
-        </th>
+     
         <th>
             @Html.DisplayNameFor(model => model.ItemQuantity)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ItemPrice)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemImage)
-        </th>
+
         <th></th>
     </tr>
 
@@ -39,25 +35,20 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ItemName)
+                @Html.DisplayFor(modelItem => item.itemName.ItemName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ItemOwner)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ItemQuality)
+                @Html.DisplayFor(modelItem => item.qualityType.QualityType)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemCategory)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.ItemQuantity)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ItemPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemImage)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

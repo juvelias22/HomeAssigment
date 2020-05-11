@@ -111,6 +111,15 @@ namespace HomeAssigment.Controllers
 
 
 
+
+        public ActionResult ViewImage(string imageUrl)
+        {
+
+            throw new NotImplementedException();
+        }
+
+
+
         // GET: ItemTypes/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -180,11 +189,6 @@ namespace HomeAssigment.Controllers
         }
 
         
-
-        public ActionResult ViewImage(string imageUrl) {
-
-            throw new NotImplementedException();
-        }
 
 
     }
