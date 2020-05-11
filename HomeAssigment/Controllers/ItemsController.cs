@@ -4,7 +4,10 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using PagedList;
+using MvcPaging;
 
+using PagedList.Mvc;
 namespace HomeAssigment.Controllers
 {
     public class ItemsController : Controller
@@ -18,12 +21,23 @@ namespace HomeAssigment.Controllers
             return View(items.ToList());
         }
 
-        public ActionResult PartialPage()
+        public ActionResult PartialPage(int? page)
         {
-            var items = db.Items.Include(i => i.itemName).Include(i => i.qualityType);
 
+            var items = db.Items.Include(i => i.itemName).Include(i => i.qualityType).OrderByDescending(a => a.ItemDate);
+
+            /*
+                        int pageSize = 3;
+                        int pageIndex = (page ?? 1);
+                        pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+
+                         */
+            var pageNumber = page ?? 1;
+            //  var onePageOfItems = items.ToPagedList(pageNumber, 25);
+            //  return View(items.ToPagedList(pageIndex, pageSize));
+            return View(items.ToPagedList(pageNumber, 10));
             // OrderBy(a => a.ItemDate).ToList()
-            return View(items.ToList());
+           // return View(items.ToList());
         }
 
         public ActionResult PartialPageItemsNewFirst()

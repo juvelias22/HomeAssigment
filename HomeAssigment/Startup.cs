@@ -5,7 +5,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
 using System;
+using System.IO;
 using System.Linq;
+using System.Net;
 
 [assembly: OwinStartupAttribute(typeof(HomeAssigment.Startup))]
 namespace HomeAssigment
@@ -20,9 +22,9 @@ namespace HomeAssigment
             CreateQualiyTypes();
             CreateTests();
 
-
+           
         }
-
+        
         public void CreateQualiyTypes()
         {
             Quality q = new Quality();
