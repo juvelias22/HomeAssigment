@@ -21,7 +21,7 @@ namespace HomeAssigment.Controllers
             return View(items.ToList());
         }
 
-        public ActionResult PartialPage(int? page)
+        public ActionResult PartialPageNewFirst(int? page)
         {
 
             var items = db.Items.Include(i => i.itemName).Include(i => i.qualityType).OrderByDescending(a => a.ItemDate);
@@ -40,12 +40,22 @@ namespace HomeAssigment.Controllers
            // return View(items.ToList());
         }
 
-        public ActionResult PartialPageItemsNewFirst()
+        public ActionResult PartialAddedByUser(int? page)
         {
-            var items = db.Items.Include(i => i.itemName).Include(i => i.qualityType).OrderByDescending(a => a.ItemDate);
 
-           // OrderBy(a => a.ItemDate).ToList()
-            return View(items.ToList());
+
+            var items = db.Items.Include(i => i.itemName).Include(i => i.qualityType).OrderByDescending(a => a.ItemOwner);
+
+            /*
+                        int pageSize = 3;
+                        int pageIndex = (page ?? 1);
+                        pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+
+                         */
+            var pageNumber = page ?? 1;
+            //  var onePageOfItems = items.ToPagedList(pageNumber, 25);
+            //  return View(items.ToPagedList(pageIndex, pageSize));
+            return View(items.ToPagedList(pageNumber, 10));
         }
 
         // GET: Items/Details/5
@@ -64,6 +74,7 @@ namespace HomeAssigment.Controllers
         }
 
         // GET: Items/Create
+        [Authorize(Roles = "Admin,RegisteredUser")]
         public ActionResult Create()
         {
             ViewBag.ItemTypeId = new SelectList(db.ItemTypes, "Id", "ItemName");
@@ -76,6 +87,7 @@ namespace HomeAssigment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,RegisteredUser")]
         public ActionResult Create([Bind(Include = "Id,ItemTypeId,QualityId,ItemQuantity,ItemPrice")] Items items)
         {
             if (ModelState.IsValid)
@@ -93,6 +105,7 @@ namespace HomeAssigment.Controllers
         }
 
         // GET: Items/Edit/5
+        [Authorize(Roles = "Admin,RegisteredUser")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -114,6 +127,7 @@ namespace HomeAssigment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,RegisteredUser")]
         public ActionResult Edit([Bind(Include = "Id,ItemTypeId,QualityId,ItemQuantity,ItemPrice")] Items items)
         {
             if (ModelState.IsValid)
@@ -130,6 +144,7 @@ namespace HomeAssigment.Controllers
         }
 
         // GET: Items/Delete/5
+        [Authorize(Roles = "Admin,RegisteredUser")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -147,6 +162,7 @@ namespace HomeAssigment.Controllers
         // POST: Items/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,RegisteredUser")]
         public ActionResult DeleteConfirmed(int id)
         {
             Items items = db.Items.Find(id);

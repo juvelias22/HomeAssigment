@@ -1,44 +1,9 @@
-﻿@model  PagedList.IPagedList<HomeAssigment.Models.Items>
-@using PagedList.Mvc;
-@using PagedList;
-
-
+﻿
+@model IEnumerable<HomeAssigment.Models.Items>
 
 @{
-    ViewBag.Title = "items";
+    ViewBag.Title = "Index";
 }
-
-
-<style>
-    .ul.pagination {
-        display: inline-block;
-        padding: 0;
-        margin: 0;
-    }
-
-    ul.pagination li {
-        display: inline;
-    }
-
-        ul.pagination li a {
-            color: black;
-            float: left;
-            padding: 8px 16px;
-            text-decoration: none;
-            transition: background-color .3s;
-        }
-
-            ul.pagination li a.active {
-                background-color: #4CAF50;
-                color: white;
-            }
-
-            ul.pagination li a:hover:not(.active) {
-                background-color: #ddd;
-            }
-</style>
-
-
 
 
 @foreach (var item in Model)
@@ -66,7 +31,8 @@
     <br>
     <br>
 
+
+
+
+
 }
-
-
-@Html.PagedListPager(Model, page => Url.Action("PartialPage", new { page }))

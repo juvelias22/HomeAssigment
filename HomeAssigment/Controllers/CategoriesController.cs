@@ -12,15 +12,20 @@ namespace HomeAssigment.Controllers
 {
     public class CategoriesController : Controller
     {
+   
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Categories
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Index()
         {
             return View(db.Categories.ToList());
         }
 
         // GET: Categories/Details/5
+        [Authorize(Roles = "Admin")]
+     
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +42,7 @@ namespace HomeAssigment.Controllers
 
         // GET: Categories/Create
         [Authorize(Roles ="Admin")]
+     
         public ActionResult Create()
         {
             return View();
@@ -61,6 +67,8 @@ namespace HomeAssigment.Controllers
         }
 
         // GET: Categories/Edit/5
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,6 +88,8 @@ namespace HomeAssigment.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+ 
         public ActionResult Edit([Bind(Include = "Id,Category")] Categories categories)
         {
             if (ModelState.IsValid)
@@ -92,6 +102,8 @@ namespace HomeAssigment.Controllers
         }
 
         // GET: Categories/Delete/5
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -107,6 +119,8 @@ namespace HomeAssigment.Controllers
         }
 
         // POST: Categories/Delete/5
+        [Authorize(Roles = "Admin")]
+    
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

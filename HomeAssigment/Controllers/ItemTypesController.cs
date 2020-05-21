@@ -14,6 +14,7 @@ using Microsoft.Ajax.Utilities;
 
 namespace HomeAssigment.Controllers
 {
+    [Authorize(Roles = "Admin,RegisteredUser")]
     public class ItemTypesController : Controller
     {
         public static string ImgUrl;
@@ -26,7 +27,8 @@ namespace HomeAssigment.Controllers
             var itemTypes = db.ItemTypes.Include(i => i.category);
             return View(itemTypes.ToList());
         }
-
+      
+      
         // GET: ItemTypes/Details/5
         public ActionResult Details(int? id)
         {
@@ -42,8 +44,9 @@ namespace HomeAssigment.Controllers
             return View(itemType);
         }
 
-      
+
         // GET: ItemTypes/Create
+   
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Category");
@@ -57,14 +60,17 @@ namespace HomeAssigment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,CategoryId,ItemName")] ItemType itemType, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            string check = UploadImage(file);
+            if (check  != null)
             {
-                itemType.ImagePath = UploadImage(file);
-                db.ItemTypes.Add(itemType);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    itemType.ImagePath = check;
+                    db.ItemTypes.Add(itemType);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Category", itemType.CategoryId);
             return View(itemType);
         }
@@ -74,44 +80,44 @@ namespace HomeAssigment.Controllers
 
         public string UploadImage(HttpPostedFileBase file)
         {
-            string accessToken = "SW-I0OEdJxAAAAAAAAAAmnlJmZJp23Ba-43wB317gS2sYHnn34cGSAlZRyXrrods";
+            string accessToken = "SW-I0OEdJxAAAAAAAAAAuG6uoYzI4hu-S2eQunotCGQEtvtlgW5y2q0pYq4jFD-I";
             //   HttpPostedFileBase file;
             using (DropboxClient client =
                 new DropboxClient(accessToken, new DropboxClientConfig(ApplicationName)))
             {
-               
+            
 
-                string[] splitInputFileName = file.FileName.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
-                string fileNameAndExtension = splitInputFileName[splitInputFileName.Length - 1];
+                    string[] splitInputFileName = file.FileName.Split(new string[] { "//" }, StringSplitOptions.RemoveEmptyEntries);
+                    string fileNameAndExtension = splitInputFileName[splitInputFileName.Length - 1];
 
-                string[] fileNameAndExtensionSplit = fileNameAndExtension.Split('.');
-                string originalFileName = fileNameAndExtensionSplit[0];
-                string originalExtension = fileNameAndExtensionSplit[1];
-                System.Diagnostics.Debug.WriteLine(originalExtension);
+                    string[] fileNameAndExtensionSplit = fileNameAndExtension.Split('.');
+                    string originalFileName = fileNameAndExtensionSplit[0];
+                    string originalExtension = fileNameAndExtensionSplit[1];
+                    System.Diagnostics.Debug.WriteLine(originalExtension);
 
-                if (originalExtension == "jpg" || originalExtension == "jpeg")
-                {
-                    string fileName = @"/Images/" + originalFileName + Guid.NewGuid().ToString().Replace("-", "") + "." + originalExtension;
+                    if (originalExtension == "jpg" || originalExtension == "jpeg")
+                    {
+                        string fileName = @"/Images/" + originalFileName + Guid.NewGuid().ToString().Replace("-", "") + "." + originalExtension;
 
 
 
-                    var updated = client.Files.UploadAsync(fileName,
-                                                            mode: WriteMode.Overwrite.Instance,
-                                                            body: file.InputStream).Result;
+                        var updated = client.Files.UploadAsync(fileName,
+                                                                mode: WriteMode.Overwrite.Instance,
+                                                                body: file.InputStream).Result;
 
-                    var result = client.Sharing.CreateSharedLinkWithSettingsAsync(fileName).Result;
-                    ;
-                    //System.Diagnostics.Debug.WriteLine(ImgUrl);
+                        var result = client.Sharing.CreateSharedLinkWithSettingsAsync(fileName).Result;
+                        ;
+                        //System.Diagnostics.Debug.WriteLine(ImgUrl);
 
-                    // ImageUrl = result.Url
-                    //  return View(itemType, new { ImageUrl = result.Url });
-                    return result.Url.Replace("?dl=0", "?raw=1");
-                }
-                else 
-                {
-                    return "check type is jpg or jpeg";
-                }
-              
+                        // ImageUrl = result.Url
+                        //  return View(itemType, new { ImageUrl = result.Url });
+                        return result.Url.Replace("?dl=0", "?raw=1");
+                    }
+                    else
+                    {
+                        return null;
+                    }
+        
             }
 
         }

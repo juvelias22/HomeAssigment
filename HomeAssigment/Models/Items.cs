@@ -20,11 +20,7 @@ namespace HomeAssigment.Models
         public int ItemTypeId { get; set; }
         public ItemType itemName { get; set; }
 
-
-
-
         public string ItemOwner { get; set; }
-
 
         [Required]
         [Display(Name = "Item Quality")]
@@ -41,9 +37,6 @@ namespace HomeAssigment.Models
         [Display(Name = "Item Price")]
         [Range(1, double.MaxValue, ErrorMessage = "Only positive number allowed")]
         public double ItemPrice { get; set; }
-
-
-
         public DateTime ItemDate { get; set; }
 
 

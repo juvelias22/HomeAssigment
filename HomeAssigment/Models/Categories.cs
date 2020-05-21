@@ -20,8 +20,5 @@ namespace HomeAssigment.Models
         [MinLength(2, ErrorMessage = "min char is two ")]
         public string Category { get; set; }
 
-
-
-
     }
 }

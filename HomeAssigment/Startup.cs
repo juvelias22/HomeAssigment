@@ -179,10 +179,6 @@ namespace HomeAssigment
         private void createRolesAndDefaultUsers()
         {
 
-
-
-
-
             using (ApplicationDbContext context = new ApplicationDbContext())
             {
 
@@ -282,7 +278,6 @@ namespace HomeAssigment
 
 
                             }
-                          
                         
                         }
 
@@ -302,7 +297,6 @@ namespace HomeAssigment
                         {
                             IdentityResult chkRole = userManager.AddToRole(user.Id, "RegisteredUser");
 
-                          
                         }
                        
                     }

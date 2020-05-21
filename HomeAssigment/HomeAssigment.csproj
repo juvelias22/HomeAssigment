@@ -181,6 +181,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\ItemTypesController.cs" />
@@ -191,6 +192,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Categories.cs" />
+    <Compile Include="Models\Error.cs" />
     <Compile Include="Models\ItemType.cs" />
     <Compile Include="Models\Items.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -275,9 +277,12 @@
     <Content Include="Views\ItemTypes\Index.cshtml" />
     <Content Include="Views\ItemTypes\UploadImage.cshtml" />
     <Content Include="Views\Home\UploadImage.cshtml" />
-    <Content Include="Views\PartialPages\Items.cshtml" />
-    <Content Include="Views\Items\PartialPageItemsNewFirst.cshtml" />
-    <Content Include="Views\Items\PartialPage.cshtml" />
+    <Content Include="Views\Items\PartialAddedByUser.cshtml" />
+    <Content Include="Views\Items\PartialPageNewFirst.cshtml" />
+    <Content Include="Views\ErrorPage\NotFound.cshtml" />
+    <Content Include="Views\ErrorPage\Index.cshtml" />
+    <Content Include="Views\ErrorPage\Error.cshtml" />
+    <Content Include="Views\Items\PartialCard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
